@@ -2,7 +2,6 @@ import React from "react";
 import { CLOUDFRONT_URL } from "../config"
 
 const EntityList = ({ results }) => {
-  console.log(results)
 
   const filtered = results.filter((ele, index) => results.findIndex(obj => obj.name == ele.name && obj._source.ts == ele._source.ts) === index)
 
@@ -12,6 +11,9 @@ const EntityList = ({ results }) => {
 
   return (
     <div>
+      {filtered?.length > 0 ?
+        <h2 className="entity_search"> Search Results</h2> : null
+      }
       {filtered?.map((result) => {
         const video_url = result._source.videoClipName;
 
@@ -21,7 +23,6 @@ const EntityList = ({ results }) => {
         const timestamp = new Date(parseInt(base_ts) + parseInt(ts))
         return (
           <>
-            <h2 className="entity_search"> Search Results</h2>
             <hr />
             <div className="entity" key={result.name}>
               <video width="300px" height="200px" controls>
