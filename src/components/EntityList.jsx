@@ -3,7 +3,7 @@ import { CLOUDFRONT_URL } from "../config"
 
 const EntityList = ({ results }) => {
 
-  const filtered = results.filter((ele, index) => results.findIndex(obj => obj.name == ele.name && obj._source.ts == ele._source.ts) === index)
+  const filtered = results.filter((ele, index) => results.findIndex(obj => obj.name === ele.name && obj._source.ts === ele._source.ts) === index)
 
   const generateDatabaseDateTime = (date) => {
     return date.toISOString().replace("T", " ").substring(0, 19);
@@ -12,7 +12,7 @@ const EntityList = ({ results }) => {
   return (
     <div>
       {filtered?.length > 0 ?
-        <h2 className="entity_search"> Search Results</h2> : null
+        <h3 className="entity_search"> Search Results</h3> : null
       }
       {filtered?.map((result) => {
         const video_url = result._source.videoClipName;
@@ -25,14 +25,12 @@ const EntityList = ({ results }) => {
           <>
             <hr />
             <div className="entity" key={result.name}>
-              <video width="300px" height="200px" controls>
+              <video className="video" controls>
                 <source src={`${absolute_video_url}`} type="video/mp4" />
               </video>
               <section className="entity_info">
                 <div ><b>Entity Detected:</b> {result._source.name}</div>
-                <div ><b>Video Clip Start Time:</b> {generateDatabaseDateTime(new Date(base_ts))}</div>
                 <div ><b>Entity Detection Time:</b> {generateDatabaseDateTime(timestamp)}</div>
-                <div ><b>Entity Detected at {ts / 1000}th second in video</b> </div>
               </section>
             </div>
             <hr />
